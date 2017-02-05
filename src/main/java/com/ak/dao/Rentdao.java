@@ -9,7 +9,7 @@ import com.ak.entity.Rent;
 import com.ak.entity.User;
 
 @Repository
-public interface Rentdao extends JpaRepository<Rent, Long> {
+public interface RentDao extends JpaRepository<Rent, Long> {
 
 	//zwrocic liste wypozyczen danego usera posortowana nie rosnaco ze wzg na createdDate
 	List<Rent> findByUserOrderByCreatedDateDesc(User user); //createdDate -> nazwa musi byc z malej litery w encji rent

@@ -1,10 +1,7 @@
 package com.ak.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -28,7 +25,7 @@ public class Book extends BaseEntity {
 	
 	@Min(0)
 	@Column(name="available")
-	private Integer availabe; //ilosc ksiazek
+	private Integer availabe; //ilosc ksiazek mozliwych do wypozyczenia
 	
 	// NIE DAJEMY bo to sié tworzy podobno domyslnie!
 //	@OneToMany(mappedBy="book")
