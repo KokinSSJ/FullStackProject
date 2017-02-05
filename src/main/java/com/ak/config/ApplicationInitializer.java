@@ -10,12 +10,16 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+
+//klasa zwiazana ze startem aplikacji
 public class ApplicationInitializer implements WebApplicationInitializer{
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext appContext =  new AnnotationConfigWebApplicationContext();
-		appContext.register(AppConfig.class);
+		// powiazanie konretksu z konfiguracja obietkowa
+		appContext.register(AppConfig.class); //przekazanie poprzez "refleksje" - poczytaj
+
 		
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
 		
@@ -24,9 +28,11 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 		servletRegistration.setLoadOnStartup(1);
 		servletRegistration.addMapping("/");
 		
+		
+		//filtr zwiazany z wymiana danych
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-		characterEncodingFilter.setEncoding("UTF-8");
-		characterEncodingFilter.setForceEncoding(true);
+		characterEncodingFilter.setEncoding("UTF-8"); //kodowanie requestow
+		characterEncodingFilter.setForceEncoding(true); //wymusza kodowanie
 		
 		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter).addMappingForUrlPatterns(null, true, "/*");;
 		

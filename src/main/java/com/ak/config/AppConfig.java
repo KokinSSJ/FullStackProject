@@ -19,8 +19,8 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableTransactionManagement //zarzadzal bedzie spring automatycznie transakcjami
 public class AppConfig extends WebMvcConfigurerAdapter
 {
-	private final static String email = "test54321010@gmail.com"; //obojetnie jaki nasz mail
-	private final static String password = "testpass123";
+	private final static String email = "javatesterpl@gmail.com"; //mail spamujący
+	private final static String password = "testerjava"; // haslo do maila spamujacego
 	
 	
 	@Override
