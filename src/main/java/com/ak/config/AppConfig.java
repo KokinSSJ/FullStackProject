@@ -6,6 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -13,14 +15,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.ak.scheduler.AdvService;
+
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.ak")
 @EnableTransactionManagement //zarzadzal bedzie spring automatycznie transakcjami
+@EnableScheduling
+@EnableAsync
 public class AppConfig extends WebMvcConfigurerAdapter
 {
-	private final static String email = "javatesterpl@gmail.com"; //mail spamujący
-	private final static String password = "testerjava"; // haslo do maila spamujacego
+	private final static String email = "test54321010@gmail.com"; //mail spamujący
+	private final static String password = "testpass123"; // haslo do maila spamujacego
 	
 	
 	@Override
@@ -53,9 +59,15 @@ public class AppConfig extends WebMvcConfigurerAdapter
 		javaMailSenderImpl.setPassword(password);
 		
 		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.auth", "true");
-		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.startlls", "true");
+		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.starttls.enable", "true");
 		
 		return javaMailSenderImpl;
+	}
+	
+	
+	@Bean
+	public AdvService getAdvService(){
+		return new AdvService();
 	}
 	
 	

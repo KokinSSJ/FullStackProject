@@ -94,6 +94,14 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>${java.servlet.version}</version>
         </dependency>
+        
+        <!-- Servlet-> DODAŁEM EXTRA, zeby odczytało dane w header.jsp -> teraz nie widzi problemu z *.css i *.js -->
+    <dependency>
+        <groupId>javax.servlet.jsp</groupId>
+        <artifactId>jsp-api</artifactId>
+        <version>2.1</version>
+        <scope>provided</scope>
+    </dependency>
 
         <!--JSLT-->
         <dependency>

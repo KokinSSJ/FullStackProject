@@ -10,12 +10,12 @@ import javax.validation.constraints.Size;
 
 
 @Entity
-@Table(name="Books")
+@Table(name="books")
 public class Book extends BaseEntity {
 	
 	@NotNull
 	@Column(name="author")
-	@Size(min=3, max=255, message="Nie poprawna dlugosc authora")
+	@Size(min=3, max=255, message="Nie poprawna dlugosc autora")
 	private String author;
 	
 	@NotNull
@@ -25,17 +25,16 @@ public class Book extends BaseEntity {
 	
 	@Min(0)
 	@Column(name="available")
-	private Integer availabe; //ilosc ksiazek mozliwych do wypozyczenia
+	private Integer available; //ilosc ksiazek mozliwych do wypozyczenia
 	
 	// NIE DAJEMY bo to sié tworzy podobno domyslnie!
 //	@OneToMany(mappedBy="book")
 //	private List<Rent> rent;
 	
-
+	
 	public Book() {
 		super();
 	}
-
 
 	public String getAuthor() {
 		return author;
@@ -53,14 +52,15 @@ public class Book extends BaseEntity {
 		this.title = title;
 	}
 
-	public Integer getAvailabe() {
-		return availabe;
+	public Integer getAvailable() {
+		return available;
 	}
 
-	public void setAvailabe(Integer availabe) {
-		this.availabe = availabe;
+	public void setAvailable(Integer available) {
+		this.available = available;
 	}
-	
+
+
 	
 
 }

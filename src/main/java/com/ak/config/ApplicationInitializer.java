@@ -17,6 +17,7 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext appContext =  new AnnotationConfigWebApplicationContext();
+		
 		// powiazanie konretksu z konfiguracja obietkowa
 		appContext.register(AppConfig.class); //przekazanie poprzez "refleksje" - poczytaj
 
@@ -25,8 +26,8 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 		
 		//chce teraz zarejestrowac obiekt dispatcher servlet
 		ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("dispatcher", dispatcherServlet);
-		servletRegistration.setLoadOnStartup(1);
-		servletRegistration.addMapping("/");
+		servletRegistration.setLoadOnStartup(1); //1 - priorytet ze chcemy aby apka serwera zainicjalizowala jaka pierwsza ta aplikacje
+		servletRegistration.addMapping("/"); //okreslamy poczatek mapowania w url
 		
 		
 		//filtr zwiazany z wymiana danych

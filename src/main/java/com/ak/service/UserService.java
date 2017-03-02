@@ -17,4 +17,5 @@ public interface UserService extends UserDetailsService{ //dla spring security d
 	User findOne(Long id);
 	void save(User user);
 	void delete(Long id);
+	User findByEmail(String email);
 }

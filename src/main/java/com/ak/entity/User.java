@@ -35,7 +35,7 @@ public class User extends BaseEntity {
 	
 	@Column(name="role")
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private Role role=Role.USER;
 	
 	// NIE DAJEMy bo to podobno sié tworzy domyslnie 
 //	@OneToMany(mappedBy="user")
@@ -46,6 +46,18 @@ public class User extends BaseEntity {
 		super();
 	}
 	
+	
+
+	public User(String firstName, String lastName, String email, String password) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.role = Role.USER;
+	}
+
+
 
 	public String getFirstName() {
 		return firstName;

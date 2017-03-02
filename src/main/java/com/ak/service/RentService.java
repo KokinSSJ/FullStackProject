@@ -14,4 +14,5 @@ public interface RentService{
 	void delete(Long id);
 	
 	void createRent(User user, Book book);
+	List<Rent> findByUserOrderByCreatedDateDesc(User user);
 }

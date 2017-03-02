@@ -69,7 +69,7 @@ public class HibernateConfig{
 	
 	//definicja tworzenia obiektu
 	@Bean
-	public PlatformTransactionManager platformTransactionManager(){
+	public PlatformTransactionManager transactionManager(){
 		JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
 		jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
 		return jpaTransactionManager;

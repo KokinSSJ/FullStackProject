@@ -45,7 +45,7 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public void createRent(User user, Book book) {
 		Rent rent = new Rent();
-		book.setAvailabe(book.getAvailabe() - 1);
+		book.setAvailable(book.getAvailable() - 1);
 		// TODO sprawdzenie czy dostepnych ksiazek jest min =1 po stronie widoku
 		// -> *.jsp
 		rent.setUser(user);
@@ -55,6 +55,11 @@ public class RentServiceImpl implements RentService {
 
 		rentDao.save(rent);
 
+	}
+
+	@Override
+	public List<Rent> findByUserOrderByCreatedDateDesc(User user) {
+		return rentDao.findByUserOrderByCreatedDateDesc(user);
 	}
 
 }

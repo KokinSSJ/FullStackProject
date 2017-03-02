@@ -15,7 +15,7 @@ import com.ak.service.UserService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	private static final int ENCODE_STRENGTH = 10; //im wyższa wartość tym trudniej odszyfrować
+	public static final int ENCODE_STRENGTH = 10; //im wyższa wartość tym trudniej odszyfrować
 	
 	@Autowired
 	private UserService userService;
@@ -33,20 +33,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception{
 		//mozemy dać kilka antmatchers bo wywolujem na tym obiekcie i działamy na nic 
-		httpSecurity.authorizeRequests().antMatchers("/login").permitAll() //każdy może przejsc do logowania
-			.antMatchers("/register").permitAll()					// kazdy moze przejsc do rejestracji
-			.antMatchers("/users/**", "/create-user").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
-			.antMatchers("/ADMIN/**").hasRole("ADMIN")	//operacje admina moze robić tylko admin
-			.antMatchers("/**").authenticated()	// wszystkie inne musi być zalogowany, gdyby ktoś z palca coś wrzucił
+		
+		//!!!!!!!!!!!!!!------WAŻNE ---------!!!!!!!!!!!!
+		//liczy się kolejnośc dodawania, tzn. jak funkcja sprawdzi "/**" - authenticated, a potem jest "/resources" - permiAll, to nie wykona się bo sprawdzi, że nie może wejść
+		// dajemy od ogółu do szczegółu
+		httpSecurity.authorizeRequests()
+				.antMatchers("/login").permitAll() //każdy może przejsc do logowania
+				.antMatchers("/register").permitAll()					// kazdy moze przejsc do rejestracji
+				.antMatchers("/api/**").permitAll()
+				.antMatchers("/resources/**").permitAll() //każdy uzytkownik widzi to samo, bez potrzeby autentykacji!
+//				.antMatchers("/users/**", "/create-user", "/book/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
+				.antMatchers("/users/**", "/create-user").hasRole("ADMIN")	
+				.antMatchers("/ADMIN/**").hasRole("ADMIN")	//operacje admina moze robić tylko admin
+				
+				.antMatchers("/**").authenticated() // wszystkie inne musi być zalogowany, gdyby ktoś z palca coś wrzucił to przerzuci do /login
 			.and()
 			.formLogin() //informacje o miejscach login i password na stronie beda w formatce
-			.usernameParameter("email")  //jezeli mail nie istnieje -> nie bedzie mógł otrzymać maila -> zwroci błąd że mail nie odpowiada
-			.passwordParameter("password") 
-			.loginPage("/login") //jaka strona do logowania
+				.usernameParameter("email")  //jezeli mail nie istnieje -> nie bedzie mógł otrzymać maila -> zwroci błąd że mail nie odpowiada
+				.passwordParameter("password") 
+				.loginPage("/login") //jaka strona do logowania
+				.loginProcessingUrl("/login")
 			.and()
 			.logout()
-			.logoutUrl("/logout") //przerwanie sesji spring security
-			.logoutSuccessUrl("/logout?logout") // sprawdza czy wylgoowanie jest poprawne
+				.logoutUrl("/logout") //przerwanie sesji spring security
+				.logoutSuccessUrl("/login?logout") // sprawdza czy wylgoowanie jest poprawne
 			.and()
 			.csrf().disable(); // można wyłączyć metodę z zapobieganiem ataku cross site request forgery - rodzaj ataku!
 		
