@@ -54,14 +54,14 @@ public class RentController {
 	
 	
 	//dodaje nowe wypożyczenie
-	@RequestMapping(value="/rent/book/{bookId}") //domyslnie GET
-	public String createRent(@PathVariable Long id, Principal principal){ // principal -> email -> na podstawie frontu (*.jsp)
+	@RequestMapping(value="/rent/book/{bookId}", method=RequestMethod.GET) //domyslnie GET
+	public String createRent(@PathVariable Long bookId, Principal principal){ // principal -> email -> na podstawie frontu (*.jsp)
 		String email = principal.getName(); // po zalogowaniu principal przetrzymuje dane o emailu
 		User user = userService.findByEmail(email);
-		Book book = bookService.findOne(id);
+		Book book = bookService.findOne(bookId);
 		rentService.createRent(user, book);
 		
-		return "redirect:rents";
+		return "redirect:/rents";
 	
 	}
 	

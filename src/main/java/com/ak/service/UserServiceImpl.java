@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
 			throw new UsernameNotFoundException(String.format("Uzytkownik z emailem %s nie istnieje", email));
 			
 		}
-		System.out.println("Test"); //to sie nie wykona, gdy zostanie rzucony wyjatek -> nie skonczy wykonywac sie tylko ta funkcja
+		System.out.println("Log in - User " + user.getEmail()); //to sie nie wykona, gdy zostanie rzucony wyjatek -> nie skonczy wykonywac sie tylko ta funkcja
 		// aplikacja dalej dziala!!!
 		//mozna dac finally {} zeby jeszcze sie jakis kod wykonal!!!
 		
@@ -43,19 +43,21 @@ public class UserServiceImpl implements UserService{
 	//funkcja dla ADMIN
 	@Override
 	public List<User> findAll() {	
+		System.out.println("findAll UserServiceImpl");
 		return userDao.findAll();
 	}
 
 	//funkcja dla ADMIN
 	@Override
 	public User findOne(Long id) {
-	
+		System.out.println("finOne UserServiceImpl");
 		return userDao.findOne(id);
 	}
 
 	//funkcja dla ADMIN
 	@Override
 	public void save(User user) {
+		System.out.println("save UserServiceImpl");
 		userDao.save(user);
 		
 	}
@@ -63,13 +65,14 @@ public class UserServiceImpl implements UserService{
 	//funkcja dla ADMIN
 	@Override
 	public void delete(Long id) {
+		System.out.println("delete UserServiceImpl");
 		userDao.delete(id);
 		
 	}
 
 	@Override
 	public User findByEmail(String email) {
-		
+		System.out.println("findByEmail UserServiceImpl");
 		return userDao.findByEmail(email);
 	}
 

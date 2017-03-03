@@ -24,12 +24,12 @@ public class Rent extends BaseEntity {
 	public Date createdDate;
 	
 	//nie dajemy manytomany zeby mozna bylo 
-	@ManyToOne(fetch=FetchType.LAZY) //lazy => wyciagnie tylko wypozyczenia
+	@ManyToOne(fetch=FetchType.EAGER) //lazy => wyciagnie tylko wypozyczenia
 	//eager -> zawsze wyciaga wszystko wypozyczenia + dane o ksiazce itd
 	@JoinColumn(name="user_id")
 	public User user;
 	
-	@ManyToOne //wiele wypozyczen przez jednego 
+	@ManyToOne(fetch=FetchType.EAGER) //wiele wypozyczen przez jednego 
 	@JoinColumn(name="book_id")
 	public Book book;
 	

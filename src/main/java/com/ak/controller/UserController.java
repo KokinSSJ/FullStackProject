@@ -3,6 +3,9 @@ package com.ak.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ak.config.SecurityConfig;
 import com.ak.entity.User;
 import com.ak.service.UserService;
 
@@ -37,16 +41,22 @@ public class UserController {
 	
 	//tworzy usera
 	@RequestMapping(value ="/create-user", method =RequestMethod.POST) //wyswietla strone 
-	public String saveUser(@RequestParam (required=false) Long id, @RequestParam(name="firstName", required=true) String firstName, 
-			@RequestParam(name="lastName") String lastName, @RequestParam String email, @RequestParam String password){ // nie trzeba podawać "name"
+	public String saveUser(@RequestParam (required=true) Long id, 
+			@RequestParam(name="firstName", required=true) String firstName, 
+			@RequestParam(name="lastName") String lastName, 
+			@RequestParam String email, 
+			@RequestParam String password){ // nie trzeba podawać "name"
 		
-		User user = new User(firstName, lastName, email, password);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(SecurityConfig.ENCODE_STRENGTH);
+		String encodedPassword = encoder.encode(password);
+		User user = new User(firstName, lastName, email, encodedPassword);
+		user.setId(id);
 		userService.save(user);
 		return "redirect:/users";
 	}
 	
 	//usuwanie
-	@RequestMapping(value="/users/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/users/delete/{id}", method = RequestMethod.POST)
 	public String deleteUser(@PathVariable Long id){
 		userService.delete(id);
 		return "redirect:/users";
@@ -60,5 +70,15 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "user-create";
 	}
+	//edit -> wyswietlenie edycji!
+		@RequestMapping(value="user/edit/", method=RequestMethod.GET)
+		public String editUserSelf(Model model){
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			String email = authentication.getName();
+			
+			User user = userService.findByEmail(email);
+			model.addAttribute("user", user);
+			return "user-create";
+		}
 		
 }

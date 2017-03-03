@@ -68,7 +68,7 @@ public class BookController {
 	}
 	
 	//metoda do usuwania ksiazki na podstawie id przekazanego jako parametr 
-	@RequestMapping(value="/book/delete/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/book/delete/{id}", method=RequestMethod.POST)
 	public String deleteBook ( @PathVariable Long id){
 		bookService.delete(id);
 		return "redirect:/books";

@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY) //gdy się zmieni na inne to trzeba nową scheme w mySQL stworzyć! nowe ustawienia tabel itd
 	@Column(name="id")
 	protected Long id;
 

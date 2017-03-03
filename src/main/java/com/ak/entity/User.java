@@ -25,15 +25,16 @@ public class User extends BaseEntity {
 	@Column(name="last_name")
 	private String lastName;
 	
-	@Email
+	
 	@Column(name="email", nullable=false, unique=true) // unique = w bazie nie ma juz maila
+	@Email
 	private String email;
 	
 	
 	@Column(name="password", nullable=false)
 	private String password;
 	
-	@Column(name="role")
+	@Column(name="role", nullable=false)
 	@Enumerated(EnumType.STRING)
 	private Role role=Role.USER;
 	
@@ -55,6 +56,14 @@ public class User extends BaseEntity {
 		this.email = email;
 		this.password = password;
 		this.role = Role.USER;
+	}
+	public User(String firstName, String lastName, String email, String password, Role role) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.role = role;
 	}
 
 

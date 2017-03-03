@@ -20,8 +20,10 @@
                     <th class="text-center">Title</th>
                     <th class="text-center">Author</th>
                     <th class="text-center col-md-1">Available</th>
+                    <sec:authorize access="hasRole('ADMIN')">
                     <th class="text-center col-md-1">Edit</th>
                     <th class="text-center col-md-1">Delete</th>
+                    </sec:authorize>
                     <th class="text-center col-md-1">Rent</th>
 
                 </tr>
@@ -33,10 +35,12 @@
                         <td>${book.title}</td>
                         <td>${book.author}</td>
                         <td>${book.available}</td>
+                         <sec:authorize access="hasRole('ADMIN')">
                         <td class="text-center"><a href="${editBookUrl}/${book.id}" class="btn btn-sm btn-primary">Edit</a></td>
                         <td class="text-center">
                             <a href="${deleteBookUrl}/${book.id}" class="btn btn-sm btn-danger delete-button">Delete</a>
                         </td>
+                        </sec:authorize>
 
                         <td class="text-center">
                         <c:choose>

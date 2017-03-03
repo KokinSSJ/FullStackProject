@@ -4,6 +4,7 @@
 <c:url value="/users" var="usersURL"/>
 <c:url value="/create-user" var="createUserURL"/>
 <c:url value="/logout" var="logoutURL"/>
+<c:url value="/user/edit" var="editCurrentUserURL"/>
 
 <c:url var="booksUrl" value="/books"/>
 <c:url var="createBookUrl" value="/book/create"/>
@@ -55,7 +56,7 @@
                         <sec:authentication property="principal.username"/>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">My account</a></li>
+                        <li><a href="${editCurrentUserURL}/">My account</a></li>
                         <li role="separator" class="divider"></li>
                         <li>
                             <a href="${logoutURL}">Logout</a>

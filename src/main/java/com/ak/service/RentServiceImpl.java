@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ak.dao.BookDao;
 import com.ak.dao.RentDao;
 import com.ak.entity.Book;
 import com.ak.entity.Rent;
@@ -18,6 +19,9 @@ public class RentServiceImpl implements RentService {
 
 	@Autowired
 	private RentDao rentDao;
+	
+	@Autowired
+	private BookDao bookDao;
 
 	@Override
 	public List<Rent> findAll() {
@@ -45,7 +49,9 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public void createRent(User user, Book book) {
 		Rent rent = new Rent();
+		System.out.println(book.getAvailable());
 		book.setAvailable(book.getAvailable() - 1);
+		System.out.println(book.getAvailable());
 		// TODO sprawdzenie czy dostepnych ksiazek jest min =1 po stronie widoku
 		// -> *.jsp
 		rent.setUser(user);
@@ -53,6 +59,7 @@ public class RentServiceImpl implements RentService {
 		rent.setStatus(Status.IN_PROGRESS);
 		rent.createdDate = Date.from(Instant.now());
 
+		bookDao.save(book); //save new book availability
 		rentDao.save(rent);
 
 	}

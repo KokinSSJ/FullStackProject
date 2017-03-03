@@ -48,12 +48,13 @@ public class MainController {
 			user.setPassword(encodedPassword);
 			userService.save(user);
 		}catch(Exception ex){
-			return "register";
+			System.out.println("Register problem");
+			return "redirect:/register";
 		}
 		emailService.sendEmail("metinhack911@gmail.com", user.getEmail(), "LibraryApp", "Welcome " + user.getFirstName());
 		
 		
-		return "login";
+		return "redirect:/login";
 				
 	}
 

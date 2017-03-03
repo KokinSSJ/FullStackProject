@@ -19,7 +19,7 @@ public class Book extends BaseEntity {
 	private String author;
 	
 	@NotNull
-	@Column(name="title")
+	@Column(name="title", unique=true)
 	private String title;
 	
 	
@@ -60,7 +60,14 @@ public class Book extends BaseEntity {
 		this.available = available;
 	}
 
+	public Book(String author, String title, Integer available) {
+		super();
+		this.author = author;
+		this.title = title;
+		this.available = available;
+	}
 
+	
 	
 
 }
