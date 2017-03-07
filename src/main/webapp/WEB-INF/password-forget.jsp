@@ -2,7 +2,6 @@
 <%@ include file="/WEB-INF/include/header.jsp" %>
 
 <c:url value="/login" var="loginURL"/>
-<c:url value="/register" var="registerURL"/>
 <c:url value="/password-forget" var="passwordForget"/>
 
 <div class="container">
@@ -29,23 +28,16 @@
     </c:if>
 
     <div class="card card-container">
-        <h4> Login to your account</h4>
-        <form action="${loginURL}" method="post" class="form-signin">
+        <h4> Did you forget your password?</h4>
+        <form action="${passwordForget}" method="post" class="form-signin">
             <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <div id="remember" class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+ 
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Send email</button>
         </form>
         <div class="margin-bottom-10">
             Don't have account? <a href="${registerURL}" class="register">Create account</a>
         </div>
-        <div class="margin-bottom-10">
-            Don't remember password? <a href="${passwordForget}" class="register">Password reminder</a>
-        </div>
+
     </div>
 </div>
 <%@ include file="/WEB-INF/include/footer.jsp" %>

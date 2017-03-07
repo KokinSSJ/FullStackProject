@@ -42,10 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register").permitAll()					// kazdy moze przejsc do rejestracji
 				.antMatchers("/api/**").permitAll()
 				.antMatchers("/resources/**").permitAll() //każdy uzytkownik widzi to samo, bez potrzeby autentykacji!
-				.antMatchers("/users/edit/**").permitAll() 
+				.antMatchers("/user/edit/**").permitAll() 
 //				.antMatchers("/users/**", "/create-user").hasRole("ADMIN")	
 //				.antMatchers("/users/**", "/create-user", "/book/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
-				.antMatchers("/users/**", "/book/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
+				.antMatchers("/users/**", "/book/**", "/user/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
 				.antMatchers("/ADMIN/**").hasRole("ADMIN")	//operacje admina moze robić tylko admin
 				
 				.antMatchers("/**").authenticated() // wszystkie inne musi być zalogowany, gdyby ktoś z palca coś wrzucił to przerzuci do /login

@@ -51,11 +51,28 @@ public class MainController {
 			System.out.println("Register problem");
 			return "redirect:/register";
 		}
+		
+		// setFrom -> email> można zmienić natywny email "nadawcy"
+		// email bedzie wysłany z tego natywnego, ale u odbiorcy pokaze sie że wysłał ten nowy (w wyslanych skrzynki natywnej widać treść wiadomosci)
+		// w ustawieniach poczty natywnej (np.gmail) trzeba dodać tego dodatkowego maila do obsługiawanych np. metinhack911@gmail.com
+		// gmail>settings->Accounts and Import -> "Send mail as"
 		emailService.sendEmail("metinhack911@gmail.com", user.getEmail(), "LibraryApp", "Welcome " + user.getFirstName());
 		
 		
 		return "redirect:/login";
 				
+	}
+	
+	@RequestMapping(value = "/password-forget", method = RequestMethod.GET) // tylko wyswietlenie strony password-forget!
+	public String getPasswordForgetPage() {
+		return "password-forget";
+	}
+	
+	@RequestMapping(value = "/password-forget", method = RequestMethod.POST) // tylko wyswietlenie strony password-forget!
+	public String sendNewPassword(@ModelAttribute User user) {
+		System.out.println("Send email " + user.getEmail());
+		 
+		return "redirect:/login";
 	}
 
 }
