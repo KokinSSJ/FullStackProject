@@ -27,6 +27,13 @@
         </div>
     </c:if>
 
+    <c:if test="${ ServerInfo !=null}">
+        <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <p>Server: ${ServerInfo}</p>
+        </div>
+    </c:if>
+
     <div class="card card-container">
         <h4> Did you forget your password?</h4>
         <form action="${passwordForget}" method="post" class="form-signin">
@@ -36,6 +43,9 @@
         </form>
         <div class="margin-bottom-10">
             Don't have account? <a href="${registerURL}" class="register">Create account</a>
+        </div>
+        <div class="margin-bottom-10">
+            <a href="${loginURL}" class="forgot-password">Back to login</a>
         </div>
 
     </div>

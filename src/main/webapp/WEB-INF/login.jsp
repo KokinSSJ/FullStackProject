@@ -27,6 +27,12 @@
             <p>Username or password is incorrect</p>
         </div>
     </c:if>
+    <c:if test="${ ServerInfo !=null}">
+        <div class="alert alert-success fade in">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <p>Server: ${ServerInfo}</p>
+        </div>
+    </c:if>
 
     <div class="card card-container">
         <h4> Login to your account</h4>

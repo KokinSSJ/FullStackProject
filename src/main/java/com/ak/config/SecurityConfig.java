@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/**").permitAll()
 				.antMatchers("/resources/**").permitAll() //każdy uzytkownik widzi to samo, bez potrzeby autentykacji!
 				.antMatchers("/user/edit/**").permitAll() 
+				.antMatchers("/password-forget").not().authenticated()
 //				.antMatchers("/users/**", "/create-user").hasRole("ADMIN")	
 //				.antMatchers("/users/**", "/create-user", "/book/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
 				.antMatchers("/users/**", "/book/**", "/user/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
@@ -61,9 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/login?logout") // sprawdza czy wylgoowanie jest poprawne
 			.and()
 			.csrf().disable(); // można wyłączyć metodę z zapobieganiem ataku cross site request forgery - rodzaj ataku!
-		
-		
-		
+
 	}
 	
 
