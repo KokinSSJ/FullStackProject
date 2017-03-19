@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="/WEB-INF/include/header.jsp" %>
+<%@ include file="/WEB-INF/include/navbar_main.jsp" %>
 
 <c:url value="/login" var="loginURL"/>
 <c:url value="/password-forget" var="passwordForget"/>
@@ -41,8 +42,11 @@
  
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Send email</button>
         </form>
-        <div class="margin-bottom-10">
-            Don't have account? <a href="${registerURL}" class="register">Create account</a>
+        <div class="margin-bottom-10 small">
+        <em>
+        Don't have account? <a href="${registerURL}" class="register">Create account</a>
+        </em>
+            
         </div>
         <div class="margin-bottom-10">
             <a href="${loginURL}" class="forgot-password">Back to login</a>

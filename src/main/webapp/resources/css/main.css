@@ -4,12 +4,12 @@ body, html {
 
 .card-container.card {
     max-width: 350px;
-    padding: 40px 40px;
+    padding: 30px 40px;
 }
-
-.card {
+ 
+.card { 
     padding: 20px 25px 30px;
-    margin: 50px auto 25px;
+    margin: 10px auto 25px;
 }
 
 .form-signin #inputEmail,
@@ -42,7 +42,7 @@ body, html {
     -webkit-user-select: none;
     user-select: none;
     cursor: default;
-}
+} 
 
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
@@ -57,14 +57,42 @@ body, html {
 .forgot-password:hover,
 .forgot-password:active,
 .forgot-password:focus{
-    color: rgb(12, 97, 33);
+    color: rgb(12, 97, 33); 
 }
 
-.margin-bottom-10 {
+.margin-bottom-10 { 
     margin-bottom: 10px;
-}
+} 
 
 .table>tbody>tr>td {
     vertical-align: middle;
     display: table-cell;
+} 
+
+.navbar-main{
+    /*width: 700px;*/
+	margin: 10px 10px 10px 10px;
+    font-family: 'Jim Nightshade', cursive; 
+
 }
+.navbar-right {
+    /*font-size: 50px;*/
+        text-align: right;
+} 
+.navbar >.container-fluid{ 
+    margin: 10px 30px 0px 30px; 
+}
+.form-group {
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.form-control{
+    border: 2px solid #ccc;
+    /*box-shadow: 2px 2px 5px yellow;*/
+}
+
+.has-error .form-control{
+    box-shadow: -3px -4px 12px 0px rgba(232, 8, 8, 0.34);
+}
+

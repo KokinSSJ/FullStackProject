@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -32,6 +33,7 @@ public class User extends BaseEntity {
 	
 	
 	@Column(name="password", nullable=false)
+	@Size(min=3) // patrz jeszcze validator frontend druga reguła!
 	private String password;
 	
 	@Column(name="role", nullable=false)

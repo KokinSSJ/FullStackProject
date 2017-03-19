@@ -25,8 +25,8 @@ import com.ak.scheduler.AdvService;
 @EnableAsync
 public class AppConfig extends WebMvcConfigurerAdapter
 {
-	private final static String email = "test54321010@gmail.com"; //mail spamujący
-	private final static String password = "testpass123"; // haslo do maila spamujacego
+	private final static String EMAIL = "test54321010@gmail.com"; //mail spamujący
+	private final static String PASSWORD = "testpass123"; // haslo do maila spamujacego
 	
 	
 	@Override
@@ -55,8 +55,8 @@ public class AppConfig extends WebMvcConfigurerAdapter
 		javaMailSenderImpl.setPort(587);
 		
 		//nazwa konta, z jakiego bedziemy wysylac maile
-		javaMailSenderImpl.setUsername(email);
-		javaMailSenderImpl.setPassword(password);
+		javaMailSenderImpl.setUsername(EMAIL);
+		javaMailSenderImpl.setPassword(PASSWORD);
 		
 		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.auth", "true");
 		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.starttls.enable", "true");
@@ -64,11 +64,11 @@ public class AppConfig extends WebMvcConfigurerAdapter
 		return javaMailSenderImpl;
 	}
 	
-	
-	@Bean
-	public AdvService getAdvService(){
-		return new AdvService();
-	}
+	//??
+//	@Bean
+//	public AdvService getAdvService(){
+//		return new AdvService();
+//	}
 	
 	
 }

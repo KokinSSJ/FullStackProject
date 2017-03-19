@@ -52,7 +52,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@ModelAttribute User user) { //działanie / logika gdy uzytkownik sie rejestruje
+	public String register(@ModelAttribute User user, RedirectAttributes redirectAttributes) { //działanie / logika gdy uzytkownik sie rejestruje
 		try{
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(SecurityConfig.ENCODE_STRENGTH);
 			String encodedPassword = encoder.encode(user.getPassword());
@@ -68,7 +68,7 @@ public class MainController {
 		// w ustawieniach poczty natywnej (np.gmail) trzeba dodać tego dodatkowego maila do obsługiawanych np. metinhack911@gmail.com
 		// gmail>settings->Accounts and Import -> "Send mail as"
 		emailService.sendEmail("metinhack911@gmail.com", user.getEmail(), "LibraryApp", "Welcome " + user.getFirstName());
-		
+		redirectAttributes.addFlashAttribute("ServerInfo", "New user " +user.getEmail()+" created");
 		
 		return "redirect:/login";
 				
@@ -92,12 +92,13 @@ public class MainController {
 		System.out.println("Send email " + user.getEmail());
 		if(userService.findByEmail(user.getEmail())==null){
 //			response.getWriter().println("No such email");
-			model.addAttribute("ServerInfo", "No such email"); //dodaje atrybut do tej strony!
+			model.addAttribute("ServerInfo", "No such user-email in our data base"); //dodaje atrybut do tej strony!
 			System.out.println("No such email! ");
 			return "/password-forget";
 		}
-		redir.addFlashAttribute("ServerInfo", "Email sent"); //dodaje atrybut ale do strony już po redirect!
-		
+		redir.addFlashAttribute("ServerInfo", "Email sent - check your mailbox for next instructions"); //dodaje atrybut ale do strony już po redirect!
+		  emailService.sendEmail("metinhack911@gmail.com", user.getEmail(), "LibraryApp", "Welcome " + user.getFirstName());
+//		  emailService.sendEmail(from, to, title, body);
 
 		// check password forget to login.jsp
 		return "redirect:/login";

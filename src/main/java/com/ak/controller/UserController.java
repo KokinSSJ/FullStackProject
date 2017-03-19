@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ak.config.SecurityConfig;
 import com.ak.entity.User;
+import com.ak.entity.User.Role;
 import com.ak.service.UserService;
 
 @Controller
@@ -45,14 +46,19 @@ public class UserController {
 			@RequestParam(name="firstName", required=true) String firstName, 
 			@RequestParam(name="lastName") String lastName, 
 			@RequestParam String email, 
-			@RequestParam String password){ // nie trzeba podawać "name"
+			@RequestParam String password, RequestParam passwordRepeat){ // nie trzeba podawać "name"
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(SecurityConfig.ENCODE_STRENGTH);
 		String encodedPassword = encoder.encode(password);
 		User user = new User(firstName, lastName, email, encodedPassword);
 		user.setId(id);
 		userService.save(user);
-		return "redirect:/users";
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 
+		if(Role.ADMIN.equals(userService.findByEmail(authentication.getName()).getRole())){
+			return "redirect:/users";
+		}
+		return "redirect:/";
 	}
 	
 	//usuwanie

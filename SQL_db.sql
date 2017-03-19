@@ -9,9 +9,9 @@ select
     from
         book book0_;
 
-delete from users where id >=11;
+delete from users where id =40;
 select * from users;
-update users set role='ADMIN' where id=1 ;
+update users set role='ADMIN' where id=35 ;
 select * from books;
 delete from books where id >=1;
 select
@@ -24,4 +24,4 @@ select
         
 select * from rents;
 delete from rents where id >=1;
-drop table hibernate_sequence;
+drop table rents;
