@@ -40,10 +40,22 @@
                 <input name="password" type="password" id="passwordControl" class="form-control" placeholder="Password" >
             </div>
 
+            
             <div class ="form-group">
                 <span class="glyphicon glyphicon-ok form-control-feedback"></span>
                 <input name="passwordRepeat" type="password"  class="form-control" placeholder="Repeat password" >
             </div>
+            <div class="form-group col-md-12">
+                <div class="checkbox">
+                    <label>  
+                        <input id="terms" name="terms" type="checkbox"> 
+                            <!-- EN -->
+                            I have read, consent and agree to Company's User Agreement and Privacy Policy. I understand that I can change my communication preferences at any
+                            time. 
+                    </label>
+                </div>
+            </div>
+
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create</button>
         </form>
 

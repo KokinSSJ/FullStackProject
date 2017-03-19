@@ -1,6 +1,7 @@
 $(function () {
 
     $.validator.setDefaults({
+        errorClass: 'help-block', // for error labels -> bootstrap error labels
         highlight: function(element){
             $(element)
                 .closest('.form-group')
@@ -12,6 +13,13 @@ $(function () {
                 .closest('.form-group')
                 .removeClass('has-error')
                 .addClass('has-success has-feedback ');
+        },
+        errorPlacement: function(error, element){
+            if(element.prop('type')==='checkbox'){
+                error.insertAfter(element.parent());
+            } else{
+                error.insertAfter(element);
+            }
         }
     });
 
@@ -49,6 +57,9 @@ $(function () {
             lastName:{
                 required: true,
                 nowhitespace: true
+            },
+            terms: {
+                required: true
             }
         },
         messages:{
@@ -73,6 +84,9 @@ $(function () {
                 required: 'Podaj swoje nazwisko',
                 nowhitespace: 'Bez spacji, możliwa \"-\"',
                 lettersonly: 'Tylko litery'
+            },
+            terms:{
+                required: 'Musisz się zgodzić na warunki !'
             }
         }
     });

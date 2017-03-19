@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
     <meta charset="utf-8"/>
     <meta id="dynamicViewport" name="viewport" content="initial-scale=1">
@@ -22,8 +22,10 @@
     crossorigin="anonymous"></script>
     <!-- <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/bootstrap/bootstrap.js"></script> -->
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    
+    <!-- Fonts -->
  	<link href="https://fonts.googleapis.com/css?family=Jim+Nightshade" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Abhaya+Libre&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
     <!-- validation of register form -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script> 
