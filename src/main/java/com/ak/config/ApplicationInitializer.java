@@ -36,7 +36,7 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 		characterEncodingFilter.setForceEncoding(true); //wymusza kodowanie
 		
 		servletContext.addFilter("characterEncodingFilter", characterEncodingFilter).addMappingForUrlPatterns(null, true, "/*");;
-		
+	
 		
 		//security - dodaje do kontekstu servletu kolejny filtr tym razem zwiazany z security
 		// chcemy aby wszystkie beany , wszystkie requesty z kontrolera były zabezpieczone przez spring security

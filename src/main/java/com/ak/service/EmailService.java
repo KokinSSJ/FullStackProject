@@ -1,10 +1,12 @@
 package com.ak.service;
 
-import javax.mail.MessagingException;
+
+import com.ak.entity.User;
 
 public interface EmailService {
 	
 	void sendEmail(String from, String to, String title, String body);
 	
-	void sendEmailHTML(String from, String to, String title, String body) throws MessagingException;
+	void sendEmailHTML(String fromCustom, String to, String title, String templateName, User user);
+	void sendEmailHTML(String to, String title, String templateName, User user);
 }

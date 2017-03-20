@@ -1,26 +1,23 @@
 package com.ak.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.transform.impl.AddDelegateTransformer;
+
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.HandlerInterceptor;
+
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ak.config.SecurityConfig;
 import com.ak.entity.User;
 import com.ak.service.EmailService;
 import com.ak.service.UserService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 
 @Controller
 public class MainController {
@@ -35,6 +32,7 @@ public class MainController {
 	@Autowired
 	private EmailService emailService;
 
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getMainPage() {
 		return "main";
@@ -75,32 +73,29 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/password-forget", method = RequestMethod.GET) // tylko wyswietlenie strony password-forget!
-	public String getPasswordForgetPage(Model model) {
-//		model.addAttribute("password", "objectContent12");
-//		<p>objectContent <c:out value='${password}' /></p>
-		
-//		System.out.println("Remote Addr: " + request.getRemoteAddr());
-//		System.out.println("Remote HOST: " + request.getRemoteHost());
-//		System.out.println("Remote Port: " + request.getRemotePort());
-//		System.out.println("Remote User: " + request.getRemoteUser());
-
+	public String getPasswordForgetPage() {
 		return "password-forget";
 	}
 	
 	@RequestMapping(value = "/password-forget", method = RequestMethod.POST) // tylko wyswietlenie strony password-forget!
 	public String sendNewPassword(@ModelAttribute User user, Model model, RedirectAttributes redir) throws Exception {
 		System.out.println("Send email " + user.getEmail());
-		if(userService.findByEmail(user.getEmail())==null){
+		User userTemp = userService.findByEmail(user.getEmail());
+		if(userTemp==null){
 //			response.getWriter().println("No such email");
 			model.addAttribute("ServerInfo", "No such user-email in our data base"); //dodaje atrybut do tej strony!
 			System.out.println("No such email! ");
 			return "/password-forget";
 		}
-		redir.addFlashAttribute("ServerInfo", "Email sent - check your mailbox for next instructions"); //dodaje atrybut ale do strony już po redirect!
-		  emailService.sendEmail("metinhack911@gmail.com", user.getEmail(), "LibraryApp", "Welcome " + user.getFirstName());
-//		  emailService.sendEmail(from, to, title, body);
-
-		// check password forget to login.jsp
+		
+			//send email with pass reminder!
+//		  emailService.sendEmail("metinhack911@gmail.com", userTemp.getEmail(), "LibraryApp", "Welcome " + userTemp.getFirstName() +" send: " + new Date());
+		  emailService.sendEmailHTML(userTemp.getEmail(), "LibraryApp Password reminder", "forgotten_password.jsp", userTemp);
+		 
+		  // add attribute for new site -> login.jsp
+		  redir.addFlashAttribute("ServerInfo", "Email sent - check your mailbox for next instructions"); //dodaje atrybut ale do strony już po redirect!
+		
+		  // if all ok redirect to login.jsp
 		return "redirect:/login";
 	}
 	

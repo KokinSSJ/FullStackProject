@@ -19,7 +19,7 @@
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Create</button>
         </form> -->
         
-        <form action="${registerURL}" method="post" id="register-form">
+        <form action="${registerURL}" method="post" id="register-form" class="register">
             <div class ="form-group ">
             <span class="glyphicon glyphicon-ok form-control-feedback"></span>
                 <input name="email" type="text" class="form-control" placeholder="Email address" >

@@ -82,7 +82,7 @@ body, html {
 .navbar >.container-fluid{ 
     margin: 10px 30px 0px 30px; 
 }
-.form-group {
+.register .form-group {
     font-size: 0.8em;
     font-style: italic;
 }

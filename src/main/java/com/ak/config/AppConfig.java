@@ -1,21 +1,22 @@
 package com.ak.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.ak.scheduler.AdvService;
 
 @Configuration
 @EnableWebMvc
@@ -25,7 +26,7 @@ import com.ak.scheduler.AdvService;
 @EnableAsync
 public class AppConfig extends WebMvcConfigurerAdapter
 {
-	private final static String EMAIL = "test54321010@gmail.com"; //mail spamujący
+	public final static String EMAIL = "test54321010@gmail.com"; //mail spamujący
 	private final static String PASSWORD = "testpass123"; // haslo do maila spamujacego
 	
 	
@@ -33,8 +34,7 @@ public class AppConfig extends WebMvcConfigurerAdapter
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable(); //wlacza domyslna konfiguracje mvc, ktore zajmuje sie przekierowaniem zadan
 	}
-	
-	
+
 	
 	//fabryka obiektu - przygotowuje w odpowiedni sposob obiekt, ktory bedzie Autowired-owany
 	@Bean //zwraca obiekt, ktory zawiera informacje o widoku - interfejsie graficznym
@@ -62,6 +62,13 @@ public class AppConfig extends WebMvcConfigurerAdapter
 		javaMailSenderImpl.getJavaMailProperties().setProperty("mail.smtp.starttls.enable", "true");
 		
 		return javaMailSenderImpl;
+	}
+	
+	@Bean
+	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
+		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
+		bean.setTemplateLoaderPath("/WEB-INF/templates/");
+		return bean;
 	}
 	
 	//??
