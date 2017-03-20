@@ -1,20 +1,22 @@
 $(function () {
 
+        // Dominik KokinSSJ
     $.validator.setDefaults({
-        errorClass: 'help-block', // for error labels -> bootstrap error labels
-        highlight: function(element){
+        errorClass: 'help-block', // for error labels -> bootstrap error labels // override
+        highlight: function(element){ // for error -> add error + remove favicon
             $(element)
                 .closest('.form-group')
                 .addClass('has-error')
                 .removeClass('has-feedback');
         },
-        unhighlight: function(element){
+        unhighlight: function(element){ //when currect -> remove error class + add succes class... 
+            // + add favicon tick for
             $(element)
                 .closest('.form-group')
                 .removeClass('has-error')
                 .addClass('has-success has-feedback ');
         },
-        errorPlacement: function(error, element){
+        errorPlacement: function(error, element){ // when checkbox insert class for parrent!
             if(element.prop('type')==='checkbox'){
                 error.insertAfter(element.parent());
             } else{
@@ -23,7 +25,7 @@ $(function () {
         }
     });
 
-    var  strong = 3;
+    var  strong = 3; //password strong 
 
     $.validator.addMethod('strongPassword', function (value, element) {
         return this.optional(element) // check if this element is required or not, don't do unnecessary things
@@ -32,9 +34,9 @@ $(function () {
         && /[a-z]/i.test(value);        //at list one char
 
             //for false return
-    }, 'Twoje hasło musi mieć przynajmniej ' + strong + ' znaków oraz zawierać przynajmniej jedną cyfrę i jeden znak');
+    }, 'Your password has to have at least ' + strong + ' chars and consist at least one digit and one char');
 
-    // validate form register 
+    // validate form register form
     $("#register-form").validate({
         rules: {
             email:{
@@ -64,31 +66,30 @@ $(function () {
         },
         messages:{
             email:{
-                required: 'Proszę podać email',
-                email: 'Uwzględnij znak \'@\' '
+                required: 'Enter your Email',
+                email: 'Email must consist \'@\' char'
 
             },
             password: {
-                required: 'Proszę podać hasło',
+                required: 'Enter your password',
             },
             passwordRepeat:{
-                required: 'Proszę podać poprawne hasło',
-                equalTo: 'Nie sa takie same'
+                required: 'Enter your password',
+                equalTo: 'Password and repeat password are not the same'
             },
             firstName: {
-                required: 'Podaj swoje imię',
-                nowhitespace: 'Podaj tylko imię - brak spacji',
-                lettersonly: 'Tylko litery'
+                required: 'Enter your name',
+                nowhitespace: 'Enter your name - without white spaces',
+                lettersonly: 'Only chars'
             },
             lastName: {
-                required: 'Podaj swoje nazwisko',
-                nowhitespace: 'Bez spacji, możliwa \"-\"',
-                lettersonly: 'Tylko litery'
+                required: 'Enter your last name',
+                nowhitespace: 'Without white spaces, allowed \"-\"',
+                lettersonly: 'Only chars'
             },
             terms:{
-                required: 'Musisz się zgodzić na warunki !'
+                required: 'You have to agree with terms!'
             }
         }
     });
-    // body...
 });

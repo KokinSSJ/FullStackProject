@@ -4,6 +4,7 @@
 
 <c:url value="/register" var="registerURL"/>
 <c:url value="/login" var="loginURL"/>
+<c:url value="/password-forget" var="passwordForget"/>
 
 <div class="container ">
     <div class="card card-container">
