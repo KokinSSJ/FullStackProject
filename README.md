@@ -5,12 +5,12 @@ Java Spring Project
 Features:
 
 1. /login
-- /register
-- /welcome
-- /addBook (ADMIN), /allBook,
-- /addUser(ADMIN), /editUser(ADMIN)
-- /logout
-- simpleEmailsender -> scheduler 
+2. /register
+3. /welcome
+4. /addBook (ADMIN), /allBook,
+5. /addUser(ADMIN), /editUser(ADMIN)
+6. /logout
+7. simpleEmailsender -> scheduler 
 
 ----------------------------------
 Used technologies:
@@ -34,7 +34,7 @@ Used technologies:
 
 -------------------------
 ----SCREENS---------
-![alt text](https://github.com/KokinSSJ/FullStackProject/blob/master/src/main/resources/templates_resources/test_attachment2.jpg "Screen 1")
+
 
 ----------------------
 License: MIT
