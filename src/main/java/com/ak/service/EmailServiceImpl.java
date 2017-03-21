@@ -1,13 +1,19 @@
 package com.ak.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +21,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.util.ClassUtils;
 
 import com.ak.config.AppConfig;
 import com.ak.entity.User;
@@ -68,9 +75,11 @@ public class EmailServiceImpl implements EmailService{
 			mimeMessageHelper.setSubject(WEB_NAME + title);
 			mimeMessageHelper.setText(getContentTemplate(properties), true);
 			
+			//add attachmets ! remember to add postfix to file name!
+			mimeMessageHelper.addAttachment("Wild boar.jpg" ,new ClassPathResource("/templates_resources/test_attachment2.jpg"));
+			
 			javaMailSender.send(mimeMessageHelper.getMimeMessage());
-			// ---------------> mail content
-			//-----------> send
+
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}	
