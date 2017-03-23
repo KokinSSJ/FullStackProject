@@ -37,4 +37,4 @@ Used technologies:
 
 ----------------------
 License: MIT
-Copyright 
+by Dominik KokinSSJ Bogacki

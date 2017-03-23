@@ -1,33 +1,24 @@
 package com.ak.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 import java.util.Properties;
 
-import javax.activation.DataSource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-import org.springframework.util.ClassUtils;
 
 import com.ak.config.AppConfig;
 import com.ak.entity.User;
 
-
 import freemarker.template.Configuration;
+
 
 
 @Service
@@ -40,6 +31,7 @@ public class EmailServiceImpl implements EmailService{
 	
 	@Autowired
 	private Configuration freeMarkerConf;
+	
 	
 	
 	@Override
@@ -55,22 +47,28 @@ public class EmailServiceImpl implements EmailService{
 
 	//TODO add properties att -> send model -> user, order, whatever you want
 	@Override
-	public void sendEmailHTML(String fromCustom, String to, String title, String templateName, User user){
+	public void sendEmailHTML(String fromCustom, String title, String templateName, User user, Properties properties){
 		
-		//TODO check if javaMailSender is changed
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 		
 		//prop for template 
-		Properties properties = new Properties();
-		properties.setProperty("email", to);
-
-//		properties.setProperty("user", model.ge)
+		Properties templateProperties = new Properties();
+		templateProperties.setProperty("email", user.getEmail());
+		templateProperties.setProperty("forget.link", "http://localhost:8090/FullStackProject/login");
+////		----------- Properties With Dots --------------------
+// 		// access from *JSP with FreeMarkerTemplate		
+//	       <!-- It works  -->
+//			<a href="${.data_model["page.URL"]}"> cos ${.data_model["page.URL"]} tam</a><br>
+//				
+//	            <!-- It works, too -->
+//			- <a href="${.data_model['page.URL']}"> cos  ${.data_model['page.URL']} tam2</a><br> 
+//		------------------------------------------------------------------------
+		
 		
 		MimeMessageHelper mimeMessageHelper;
-		
 		try {
 			mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-			mimeMessageHelper.setTo(to);
+			mimeMessageHelper.setTo(user.getEmail());
 			mimeMessageHelper.setFrom(fromCustom);
 			mimeMessageHelper.setSubject(WEB_NAME + title);
 			mimeMessageHelper.setText(getContentTemplate(properties), true);
@@ -88,18 +86,21 @@ public class EmailServiceImpl implements EmailService{
 	
 	//if you don't use custom email -> but default email!
 	@Override
-	public void sendEmailHTML(String to, String title, String templateName, User user){
-		sendEmailHTML(AppConfig.EMAIL, to, title, templateName, user);
+	public void sendEmailHTML(String title, String templateName, User user, Properties properties){
+		sendEmailHTML(AppConfig.EMAIL, title, templateName, user, properties);
 	}
 	
 	
-	
+	@Override
 	public String getContentTemplate(Properties properties){
 		StringBuilder stringContent = new StringBuilder();
 		try{
 			stringContent.append(FreeMarkerTemplateUtils.processTemplateIntoString(
-					freeMarkerConf.getTemplate("forgotten_password.jsp"), properties));
-			stringContent.append(new Date());
+					freeMarkerConf.getTemplate("forgotten_password.jsp"), properties)); //properties/ model -> not allowed dots 
+			//-> see as nesting (nameAttributeWithoutDots.email/name/password etc)
+			// model -> all nesting -> put "user" as attribute,
+			//model -> attributes
+			// properties -> only one variable -> only email, only name, for every "variable" separate .addAttribute
 		
 			return stringContent.toString();
 		} catch (Exception e) {

@@ -20,6 +20,7 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 		
 		// powiazanie konretksu z konfiguracja obietkowa
 		appContext.register(AppConfig.class); //przekazanie poprzez "refleksje" - poczytaj
+		
 
 		
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
@@ -28,7 +29,7 @@ public class ApplicationInitializer implements WebApplicationInitializer{
 		ServletRegistration.Dynamic servletRegistration = servletContext.addServlet("dispatcher", dispatcherServlet);
 		servletRegistration.setLoadOnStartup(1); //1 - priorytet ze chcemy aby apka serwera zainicjalizowala jaka pierwsza ta aplikacje
 		servletRegistration.addMapping("/"); //okreslamy poczatek mapowania w url
-		
+	
 		
 		//filtr zwiazany z wymiana danych
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();

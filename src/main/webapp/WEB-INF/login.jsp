@@ -27,12 +27,19 @@
             <p>Username or password is incorrect</p>
         </div>
     </c:if>
-    <c:if test="${ ServerInfo !=null}">
+       <c:if test="${ server_info_status == 'ok'}">
         <div class="alert alert-success fade in">
             <a class="close" data-dismiss="alert" href="#">&times;</a>
-            <p>Server: ${ServerInfo}</p>
+            <p>Server: ${server_info}</p>
         </div>
     </c:if>
+    <c:if test="${ server_info_status == 'error'}">
+        <div class="alert alert-danger fade in">
+            <a class="close" data-dismiss="alert" href="#">&times;</a>
+            <p>Server: ${server_info}</p>
+        </div>
+    </c:if>
+    
     <div class="card card-container">
         <h4> Login to your account</h4>
         <form action="${loginURL}" method="post" class="form-signin">

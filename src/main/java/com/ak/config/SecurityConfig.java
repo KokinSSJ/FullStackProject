@@ -6,10 +6,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.ak.service.UserService;
@@ -24,12 +20,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserService userService;
 	
-	//włączenie, okreslenie szyfrowania 
+	//włączenie, okreslenie szyfrowania //dla logowania?!
 	@Override
 	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
 		//inicjalizujemy obiekt zwiazany z algorytmem szyforwania hasla
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(ENCODE_STRENGTH);
 		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+		
 	}
 	
 	
@@ -42,8 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		//liczy się kolejnośc dodawania, tzn. jak funkcja sprawdzi "/**" - authenticated, a potem jest "/resources" - permiAll, to nie wykona się bo sprawdzi, że nie może wejść
 		// dajemy od ogółu do szczegółu
 		httpSecurity.authorizeRequests()
-				.antMatchers("/login").permitAll() //każdy może przejsc do logowania
+				 //każdy może przejsc do logowania
 				.antMatchers("/register").permitAll()					// kazdy moze przejsc do rejestracji
+				.antMatchers("/login").permitAll()
 				.antMatchers("/api/**").permitAll()
 				.antMatchers("/resources/**").permitAll() //każdy uzytkownik widzi to samo, bez potrzeby autentykacji!
 				.antMatchers("/user/edit/**").permitAll() 
@@ -58,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin() //informacje o miejscach login i password na stronie beda w formatce
 				.usernameParameter("email")  //jezeli mail nie istnieje -> nie bedzie mógł otrzymać maila -> zwroci błąd że mail nie odpowiada
 				.passwordParameter("password") 
-				.loginPage("/login") //jaka strona do logowania
-				.loginProcessingUrl("/login")
+				.loginPage("/login") //jaka strona do logowania, gdy ktoś nie jest zalgogwany
+				.loginProcessingUrl("/login") //??
 			.and()
 			.logout()
 				.logoutUrl("/logout") //przerwanie sesji spring security
