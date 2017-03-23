@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -36,7 +37,7 @@ public class AppConfig extends WebMvcConfigurerAdapter
 	
 	//fabryka obiektu - przygotowuje w odpowiedni sposob obiekt, ktory bedzie Autowired-owany
 	@Bean //zwraca obiekt, ktory zawiera informacje o widoku - interfejsie graficznym
-	public InternalResourceViewResolver viewResolver()
+	public ViewResolver viewResolver()
 	{
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setPrefix("/WEB-INF/"); //tu bedziem front dodawac - jsp

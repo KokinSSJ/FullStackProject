@@ -90,8 +90,8 @@ public class MainController {
 			return "redirect:/password-forget";
 		}
 		String token = UUID.randomUUID().toString();
-		model.addAttribute("email", "email kogos");
-		System.out.println("model " + model);
+		userService.createResetPasswordTokenForUser(token, userTemp);
+//		System.out.println("model " + model);
 //		model.addAttribute("test.dot", "testowanie dota"); // nie można do
 			//send email with pass reminder!
 //		  emailService.sendEmail("metinhack911@gmail.com", userTemp.getEmail(), "LibraryApp", "Welcome " + userTemp.getFirstName() +" send: " + new Date());

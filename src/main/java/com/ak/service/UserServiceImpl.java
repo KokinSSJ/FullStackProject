@@ -10,7 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.ak.dao.ResetPasswordTokenDao;
 import com.ak.dao.UserDao;
+import com.ak.entity.ResetPasswordToken;
 import com.ak.entity.User;
 
 
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private ResetPasswordTokenDao resetPasswordDao;
 	
 		//jezeli nie bedzie uzytkownika w BD to rzuci wyjatek
 	@Override 
@@ -74,6 +79,13 @@ public class UserServiceImpl implements UserService{
 	public User findByEmail(String email) {
 		System.out.println("findByEmail UserServiceImpl");
 		return userDao.findByEmail(email);
+	}
+
+	@Override
+	public void createResetPasswordTokenForUser(String token, User user) {
+		ResetPasswordToken resetPasswordToken = new ResetPasswordToken(token, user);
+		resetPasswordDao.save(resetPasswordToken);
+		
 	}
 
 }
