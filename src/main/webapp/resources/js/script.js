@@ -92,4 +92,27 @@ $(function () {
             }
         }
     });
+
+    // validate form changePassword form
+    $("#changepassword-form").validate({
+        rules: {
+            password: {
+                required: true,
+                strongPassword: true
+            },
+            passwordRepeat: {
+                required: true,
+                equalTo: "#passwordControl"
+            }
+        },
+        messages:{
+           password: {
+                required: 'Enter your password',
+            },
+            passwordRepeat:{
+                required: 'Enter your password',
+                equalTo: 'Password and repeat password are not the same'
+            }
+        }
+    });
 });

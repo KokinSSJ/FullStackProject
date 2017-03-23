@@ -25,3 +25,6 @@ select
 select * from rents;
 delete from rents where id >=1;
 drop table rents;
+
+select * from resetpasswordtoken;
+drop table resetpasswordtoken;

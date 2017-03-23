@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableScheduling
 @EnableAsync
 //@PropertySource(value = "classpath:messages/messages_en.properties", ignoreResourceNotFound=false) // acces from Environment env -> env.getProperty ("propertyName");
+//TODO private MessageSource messages; -> check this as message_en source?
 public class AppConfig extends WebMvcConfigurerAdapter
 {
 	public final static String EMAIL = "test54321010@gmail.com"; //mail spamujący

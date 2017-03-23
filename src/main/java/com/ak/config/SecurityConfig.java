@@ -44,8 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/login").permitAll()
 				.antMatchers("/api/**").permitAll()
 				.antMatchers("/resources/**").permitAll() //każdy uzytkownik widzi to samo, bez potrzeby autentykacji!
-				.antMatchers("/user/edit/**").permitAll() 
-				.antMatchers("/password-forget").not().authenticated()
+				.antMatchers("/user/edit/**").permitAll()
+				.antMatchers("/user/changePassword").permitAll()
+				.antMatchers("/password-forget").permitAll()
+				.antMatchers("/user/updatePassword").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
+//				.antMatchers("/password-forget").not().authenticated()
+				.antMatchers("/").not().hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
 //				.antMatchers("/users/**", "/create-user").hasRole("ADMIN")	
 //				.antMatchers("/users/**", "/create-user", "/book/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!
 				.antMatchers("/users/**", "/book/**", "/user/**").hasRole("ADMIN")	//moze robić tylko admin -> zalogowany!

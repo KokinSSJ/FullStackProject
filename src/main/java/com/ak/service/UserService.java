@@ -18,6 +18,6 @@ public interface UserService extends UserDetailsService{ //dla spring security d
 	void save(User user);
 	void delete(Long id);
 	User findByEmail(String email);
-	void createResetPasswordTokenForUser(String token, User user);
+
 	
 }

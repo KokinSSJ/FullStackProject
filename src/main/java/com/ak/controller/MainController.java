@@ -2,11 +2,10 @@ package com.ak.controller;
 
 
 
-import java.util.Properties;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ak.config.SecurityConfig;
 import com.ak.entity.User;
 import com.ak.prepare.ForgetPassword;
 import com.ak.service.EmailService;
+import com.ak.service.ResetPasswordService;
 import com.ak.service.UserService;
 
 
@@ -33,13 +34,17 @@ public class MainController {
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private ResetPasswordService resetPasswordService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getMainPage() {
 		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String getLoginPage() {
+	public String getLoginPage(Locale locale) {
+		System.out.println("User Locale: "  + locale);
 		return "login";
 	}
 	
@@ -90,7 +95,7 @@ public class MainController {
 			return "redirect:/password-forget";
 		}
 		String token = UUID.randomUUID().toString();
-		userService.createResetPasswordTokenForUser(token, userTemp);
+		resetPasswordService.createResetPasswordTokenForUser(token, userTemp);
 //		System.out.println("model " + model);
 //		model.addAttribute("test.dot", "testowanie dota"); // nie można do
 			//send email with pass reminder!
@@ -101,6 +106,27 @@ public class MainController {
 		  redir.addFlashAttribute("server_info", "Email sent - check your mailbox for next instructions"); //dodaje atrybut ale do strony już po redirect!
 		  redir.addFlashAttribute("server_info_status", "ok");
 		  // if all ok redirect to login.jsp
+		return "redirect:/login";
+	}
+	
+	@RequestMapping(value="/user/changePassword", method= RequestMethod.GET)
+	public String getChangePassword(@RequestParam("id") Long id, @RequestParam("token") String token, Model model, RedirectAttributes redir){
+		System.out.println("sprawdzam");
+		String result = resetPasswordService.validateResetPasswordToken(id, token);
+		System.out.println("result" + result);
+		if(result!=null){
+			model.addAttribute("server_info", result);
+			return "redirect:/login";
+		}
+		
+		redir.addFlashAttribute("user", userService.findOne(id));
+		return "/updatePassword"; //zmień to ! 
+		//TODO check if is authenticated then is principal.username -> navbar.jsp for "/"
+	}
+	
+	@RequestMapping (value ="/user/updatePassword", method=RequestMethod.POST)
+	public String changeUserPassword(){
+		
 		return "redirect:/login";
 	}
 	
